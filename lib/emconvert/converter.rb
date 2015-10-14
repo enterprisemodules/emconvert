@@ -49,9 +49,9 @@ class Converter
     change from:'orawls::utils::orainst', to:'wls_install::utils::orainst'
     change from:'orawls::utils::rcu', to:'wls_install::utils::rcu'
     change from:'orawls::utils::webtier', to:'wls_install::utils::webtier'
-    change from:'wls_install::support::files', to:'wls_install::support::files'
-    change from:'wls_install::support::nodemanagerautostart',to:'wls_install::support::nodemanagerautostart'
-    change from:'wls_install::support::params', to:'wls_install::support::params'
+    change from:'orautils::support::files', to:'wls_install::support::files'
+    change from:'orautils::support::nodemanagerautostart',to:'wls_install::support::nodemanagerautostart'
+    change from:'orautils::support::params', to:'wls_install::support::params'
     @content
   end
 
