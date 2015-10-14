@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+require "bundler/setup"
+require "emconvert/version"
+require "emconvert/converter"
+require 'optparse'
+require 'fileutils'
+
+options = {:verbose => false, :backup => true}
+
+parser = OptionParser.new do|opts|
+  opts.banner = "Usage: emconvert --verbose --backup files"
+  opts.on('-v', '--verbose', 'Show verbose output') do |verbose|
+    options[:verbose] = true;
+  end
+
+  opts.on('-b', '--backup', 'Create backup files when changed') do |verbose|
+    options[:backup] = true;
+  end
+
+  opts.on('-h', '--help', 'Displays Help') do
+    puts opts
+    exit
+  end
+end
+
+
+parser.parse!
+raise "Need to specify a set of files to process" unless ARGV.length >= 1
+
+ARGV.each do |file|
+  content = File.read(file)
+  puts "Checking file #{file}..." if options[:verbose]
+  converter = Converter.new(content)
+  new_content = converter.convert
+  if new_content != content
+    puts "Found changes..." if options[:verbose]
+    if options[:backup]
+      backup_file = File.join(File.dirname(file),File.basename(file,'.*')) + File.extname(file + '_bak')
+      puts "Creating backup file #{backup_file}..." if options[:verbose]
+      FileUtils.mv(file, backup_file)
+    end
+    File.write(file, new_content)
+  end
+end
