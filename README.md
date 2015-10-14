@@ -75,3 +75,19 @@ And install the Enterprise Module supported modules:
 - [`enterprisemodules-wls_install`](https://www.enterprisemodules.com/shop/products/puppet-wls_install-module)
 - [`enterprisemodules-wls_config`](https://www.enterprisemodules.com/shop/products/puppet-wls_config-module)
 
+## What will **NOT** be converted?
+
+When you are referencing templates or files inside the Public Domain modules, the `emconvert`  utility will not convert that. You will have to change this yourself.  You can recognise this kind of error's by this message:
+
+```
+Error: Could not retrieve catalog from remote server: Error 400 on SERVER: Could not find template 'ora_install/weblogic_silent_install_1213.rsp.erb' at /etc/puppet/modules/my_weblogic/manifests/weblogic.pp:151 on node vagrant.example.com
+Warning: Not using cache on failed catalog
+Error: Could not retrieve catalog; skipping run
+```
+
+When you are using an old version of the Public Domain modules, the API (e.g. the parameters and properties) might be changed. The `emconvert`  utility will not change the parameter and property names.  You will have to look at the new API description and change the parameters and properties. Most of the times it is the change of camel case to snake case. You can recognise this kind of errors by this kind of message:
+
+```
+Error: Could not retrieve catalog from remote server: Error 400 on SERVER: Invalid parameter wlHome on Wls_install::Support::Nodemanagerautostart[initd_nodemanager_bam_domain] at /etc/puppet/modules/my_wls2/manifests/bam/domain.pp:170 on node vagrant.example.com
+```
+
