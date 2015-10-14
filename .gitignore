@@ -1,0 +1,8 @@
+
+.DS_Store
+
+.vagrant
+
+puppet/modules/oracle/modules/easy_type/
+pkg
+test
